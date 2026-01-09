@@ -7,6 +7,8 @@ import { Component, State, h } from '@stencil/core';
 })
 
 export class MyComponent {
+  // note: I would normally use a json schema
+  // but for time constraints I hard coded them.
   @State() firstName: string = '';
   @State() firstNameError: string = '';
   @State() firstNameTouched: string = "false";
@@ -35,7 +37,6 @@ export class MyComponent {
 
   @State() formIsValid: boolean = false;
   @State() paymentSuccess: boolean = false;
-
 
 
   handleChange(event: Event, field: string) {
@@ -76,13 +77,9 @@ export class MyComponent {
         if ((inputElement.checkValidity() === false) || regexOnlyNumbers.test(this.expYear) === false) { this.expYearError = `invalid Year`; } else { this.expYearError = ''; }
         break;
     }
-
-    //this.formIsValid = this.isFormValid();
-
   }
 
-
-  isFormValid(e: Event) {
+  isFormValid() {
     let allValid = false;
 
     if (
@@ -112,36 +109,41 @@ export class MyComponent {
     this.formIsValid = false;
 
     // use an api from something like stripe to process payment
-    console.log('Submitting payment with card number:', this.cardNumber);
+    // I would use HTTPS, with a certificate from a trusted payment gateway
+    // and use tokenization to handle the card data securely.
+    console.log('Submitting secure transaction to get a token:', this.cardNumber);
 
     // Simulate token creation
+    // lets assume we got this token from a payment gateway like Stripe
     const token = { id: 'tok_sample123456' };
 
     // Simulate sending token to backend
     fetch('/process-payment', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token: token, amount: 1000 }), // Amount in cents
+      body: JSON.stringify({ token: token.id, amount: 100000 }), // Amount in cents
     })
       .then(response => response.json())
       .then(data => {
         console.log('Payment successful:', data);
         // Handle success (e.g., redirect to thank you page)
+        // there is no backend set up for this demo as of yet.
       })
-      .catch(err => console.error('Error:', err))
+      .catch(() => {
+        alert('404 - The Payment system is currently down, Please try again later,  But this is a DEMO so I will force a success Message ;)')
+      })
 
     
-    // simulate success message
+    // Just simulate a success message, all the time.
     this.paymentSuccess = true;
-    // note: I dident have time to set up an express server to handle the payment processing
+    // note: I did'nt have time to set up an express server to handle the payment processing
   }
-
 
   render() {
     return (<div>
       <form
         onSubmit={(e) => this.handleSubmit(e)} 
-        onChange={(e) => this.isFormValid(e)} 
+        onChange={() => this.isFormValid()} 
         id="paymentForm" 
         class="payment-form"
         aria-labelledby="payment Form"

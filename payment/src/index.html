@@ -1,3 +1,19 @@
+<!-- 
+ Framework Agnostic 
+  This is a reusable UI component for collecting payment card information
+  I used Stencil.js to build this web component
+  it can be used in any framework that supports web components (React, Angular, Vue, etc)
+  It includes real-time validation and accessibility features
+  The component is styled using CSS variables for easy customization and theming
+  Instructions:
+  1. Include the built component scripts in your project
+  2. Use the <my-component> tag to add the payment panel to your HTML
+  3. Customize styles using CSS variables as needed
+  4. Ensure to handle the 'submitPayment' event to process the payment data
+  5. Note: This is a basic implementation and should be enhanced for production use, including
+    secure handling of payment information and integration with a payment gateway.  
+ -->
+
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
   <head>
@@ -12,6 +28,8 @@
     
     <my-component id="paymentPanel"></my-component>
     <script>
+      // Customization & Theming Example
+      // I dident have time to add all the colors, but this is how you would do it.
       const myPaymentPanel = document.getElementById('paymentPanel');
       myPaymentPanel.style.setProperty('--primary-color', '#0351AA'); // blue
     </script>
