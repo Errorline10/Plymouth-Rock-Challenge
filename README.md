@@ -2,6 +2,9 @@ I have created a reusable web Component, I based it off of Stencil, but If I had
 
 you should be able to just clone it, and run 
 "npm run build"
+"npm run start"
+navigate to http://localhost:3333/
+
 to see it in action
 
 Framework Agnostic 
