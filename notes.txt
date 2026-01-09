@@ -1,0 +1,27 @@
+To create a standalone web component using angular 
+
+1. install "npm install @angular/elements"
+2. create the component "ng generate component payment-web-component"
+
+in the component:
+set the component to be "standalone: true"
+
+in angular project:
+set  "outputHashing": "none" in angular.json
+
+
+______________________________________________
+https://medium.com/@cory.lewis1997/angular-17-component-library-wired-for-web-components-3dccb87a6f87
+
+
+# Install the latest Angular CLI globally
+npm i -g @angular/cli
+
+# Generate the Angular workspace
+ng new my-workspace --no-create-application
+
+# Create your library
+ng generate library my-library
+
+# Create your Web Component Library
+ng generate application my-library-web-components
