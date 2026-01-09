@@ -54,7 +54,7 @@ export class MyComponent {
       case 'lastName':
         this.lastName = inputElement.value;
         this.lastNameTouched = "true";
-        if (inputElement.checkValidity() === false) { this.lastNameError = `* Last Name is a required field.`; } else { this.firstNameError = ''; }
+        if (inputElement.checkValidity() === false) { this.lastNameError = `* Last Name is a required field.`; } else { this.lastNameError = ''; }
         break;
       case 'cardNumber':
         this.cardNumber = inputElement.value;
@@ -83,7 +83,6 @@ export class MyComponent {
 
 
   isFormValid(e: Event) {
-    console.log('Validating form...', e);
     let allValid = false;
 
     if (
@@ -110,7 +109,6 @@ export class MyComponent {
 
   handleSubmit(e: Event) {
     e.preventDefault();
-
     this.formIsValid = false;
 
     // use an api from something like stripe to process payment
@@ -136,19 +134,20 @@ export class MyComponent {
     // simulate success message
     this.paymentSuccess = true;
     // note: I dident have time to set up an express server to handle the payment processing
-
-
-
   }
-
-
 
 
   render() {
     return (<div>
-      <form onSubmit={(e) => this.handleSubmit(e)} onChange={(e) => this.isFormValid(e)} id="paymentForm" class="payment-form">
+      <form
+        onSubmit={(e) => this.handleSubmit(e)} 
+        onChange={(e) => this.isFormValid(e)} 
+        id="paymentForm" 
+        class="payment-form"
+        aria-labelledby="payment Form"
+        >
 
-        <div class="total-due">Total Due: $100.00</div>
+        <div class="total-due" aria-describedby="Total Due">Total Due: $100.00</div>
 
         <div class="section-header">Payment Information</div>
         <div class="section-subheader">Please enter your payment details below.</div>
@@ -165,8 +164,11 @@ export class MyComponent {
               value={this.firstName}
               onChange={(event) => this.handleChange(event, 'firstName')}
               data-touched={this.firstNameTouched}
+              aria-required="true"
+              aria-describedby="First Name"
+              aria-invalid={this.firstNameError ? 'true' : 'false'}
             />
-            <span class="error-message">{this.firstNameError}</span>
+            <div class="error-message"><span role="alert" hidden={this.firstNameError.length ? false:true} >{this.firstNameError}</span></div>
           </div>
 
           <div class="input-group">
@@ -177,6 +179,8 @@ export class MyComponent {
               maxlength="1"
               value={this.middleName}
               onInput={(event) => this.handleChange(event, 'middleName')}
+              aria-required="false"
+              aria-describedby="Middle Name"
             />
           </div>
 
@@ -191,8 +195,11 @@ export class MyComponent {
               value={this.lastName}
               onInput={(event) => this.handleChange(event, 'lastName')}
               data-touched={this.lastNameTouched}
+              aria-required="true"
+              aria-describedby="Last Name"
+              aria-invalid={this.lastNameError ? 'true' : 'false'}
             />
-            <span class="error-message">{this.lastNameError}</span>
+            <div class="error-message"><span role="alert" hidden={this.lastNameError.length ? false:true} >{this.lastNameError}</span></div>
           </div>
 
         </div>
@@ -212,8 +219,11 @@ export class MyComponent {
               value={this.cardNumber}
               onInput={(event) => this.handleChange(event, 'cardNumber')}
               data-touched={this.cardNumberTouched}
+              aria-required="true"
+              aria-describedby="Card Number"
+              aria-invalid={this.cardNumberError ? 'true' : 'false'}
             />
-            <span class="error-message">{this.cardNumberError}</span>
+            <div class="error-message"><span role="alert" hidden={this.cardNumberError.length ? false:true} >{this.cardNumberError}</span></div>
           </div>
           <div class="input-group">
             <label htmlFor="CVV">CVV:</label>
@@ -227,8 +237,11 @@ export class MyComponent {
               value={this.CVV}
               onInput={(event) => this.handleChange(event, 'CVV')}
               data-touched={this.CVVTouched}
+              aria-required="true"
+              aria-describedby="CVV Number"
+              aria-invalid={this.CVVError ? 'true' : 'false'}
             />
-            <span class="error-message">{this.CVVError}</span>
+            <div class="error-message"><span role="alert" hidden={this.CVVError.length ? false:true} >{this.CVVError}</span></div>
           </div>
         </div>
 
@@ -248,8 +261,11 @@ export class MyComponent {
               value={this.expMonth}
               onInput={(event) => this.handleChange(event, 'expMonth')}
               data-touched={this.expMonthTouched}
+              aria-required="true"
+              aria-describedby="expiration Month"
+              aria-invalid={this.expMonthError ? 'true' : 'false'}
             />
-            <span class="error-message">{this.expMonthError}</span>
+            <div class="error-message"><span role="alert" hidden={this.expMonthError.length ? false:true} >{this.expMonthError}</span></div>
           </div>
 
           <div class="input-group">
@@ -264,13 +280,16 @@ export class MyComponent {
               value={this.expYear}
               onInput={(event) => this.handleChange(event, 'expYear')}
               data-touched={this.expYearTouched}
+              aria-required="true"
+              aria-describedby="Expiration Year"
+              aria-invalid={this.expYearError ? 'true' : 'false'}
             />
-            <span class="error-message">{this.expYearError}</span>
+            <div class="error-message"><span role="alert" hidden={this.expYearError.length ? false:true} >{this.expYearError}</span></div>
           </div>
         </div>
 
         {this.formIsValid ? <input type="submit" value="Submit">Pay</input> : <input type="submit" disabled>Pay</input>}
-        {this.paymentSuccess ? <div class="success-message">Payment Successful! Thank you for your purchase.</div> : ''}
+        {this.paymentSuccess ? <div class="success-message" role="alert" >Payment Successful! Thank you for your purchase.</div> : ''}
 
       </form>
     </div>);
