@@ -1,4 +1,4 @@
-I have created a reusable web Component, I based it off of Stencil, but If I had more time I could have exported it out od Angular. 
+I have created a reusable web Component, I based it off of Stencil, but If I had more time I could have exported it out of Angular. 
 
 you should be able to just clone it, and run 
 "npm run build"
